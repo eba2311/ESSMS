@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ethiopian Secondary School Management System (ESSMS)
 
 Enterprise-grade school management platform for Ethiopian secondary schools (Grades 9-12). Built with the MERN stack (MongoDB, Express.js, React, Node.js) + TypeScript.
@@ -1399,3 +1400,6 @@ Key variables in `server/.env`:
 ## License
 
 MIT
+=======
+# ESSMS
+>>>>>>> 2d20ffee4a8a65d674e7914c817a94eb98a56f3f

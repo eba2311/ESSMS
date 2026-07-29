@@ -5,8 +5,9 @@
  */
 const mongoose = require('mongoose');
 const crypto = require('crypto');
+require('dotenv').config();
 
-const MONGODB_URI = 'mongodb://localhost:27017/essms_dev';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/essms_dev';
 
 function hashPassword(password) {
   return new Promise((resolve, reject) => {

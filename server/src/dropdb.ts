@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 async function dropDb() {
-  await mongoose.connect('mongodb://localhost:27017/essms_dev');
+  const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/essms_dev';
+  await mongoose.connect(MONGODB_URI);
   const db = mongoose.connection.db;
   if (!db) throw new Error('Database not connected');
   await db.dropDatabase();
