@@ -122,9 +122,9 @@ export interface Immunization {
 
 // === API Response Types ===
 
-export interface ApiResponse<T = unknown> {
+export interface ApiResponse<T = any> {
   success: boolean;
-  data: T;
+  data: any;
   message?: string;
   count?: number;
   pagination?: PaginationInfo;
@@ -137,7 +137,7 @@ export interface PaginationInfo {
   pages: number;
 }
 
-export type ApiPromise<T = unknown> = Promise<import('axios').AxiosResponse<ApiResponse<T>>>;
+export type ApiPromise<T = any> = Promise<import('axios').AxiosResponse<ApiResponse<T>>>;
 
 // === Model Interfaces ===
 

@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       if (data.data?.requiresMFA) {
         const mfaError = new Error('MFA Required');
-        (mfaError as Record<string, unknown>).response = { data: { requireMfa: true } };
+        (mfaError as any).response = { data: { requireMfa: true } };
         throw mfaError;
       }
 
@@ -55,8 +55,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setPasswordExpired(!!(payload as LoginPayload).passwordExpired);
       return { passwordExpired: !!(payload as LoginPayload).passwordExpired };
     } catch (error: unknown) {
-      if (error instanceof Error && (error as Record<string, unknown>).response && ((error as Record<string, unknown>).response as Record<string, unknown>)?.data && ((error as Record<string, unknown>).response as Record<string, unknown>).data) {
-        const respData = ((error as Record<string, unknown>).response as Record<string, unknown>).data as Record<string, unknown>;
+      if (error instanceof Error && (error as any).response && (error as any).response?.data) {
+        const respData = (error as any).response.data as Record<string, unknown>;
         if (respData.requireMfa) {
           throw error;
         }

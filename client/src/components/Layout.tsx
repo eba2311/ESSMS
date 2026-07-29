@@ -340,10 +340,10 @@ export const Layout: React.FC = () => {
           messagesAPI.unreadCount(),
         ]);
         if (notifRes.status === 'fulfilled') {
-          setNotifUnread(notifRes.value.data.data?.unreadCount || 0);
+          setNotifUnread((notifRes.value.data.data as any)?.unreadCount || 0);
         }
         if (msgRes.status === 'fulfilled') {
-          setMsgUnread(msgRes.value.data.data?.unreadCount || 0);
+          setMsgUnread((msgRes.value.data.data as any)?.count || 0);
         }
       } catch { /* ignore */ }
     };

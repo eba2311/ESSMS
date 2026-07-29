@@ -94,7 +94,7 @@ export const AssessmentFormPage = () => {
     setLoading(true);
     assessmentsAPI.get(id)
       .then((r) => {
-        const a = r.data.data;
+        const a = r.data.data as any;
         const subjectId = a.subject?._id || a.subject || '';
         const sectionId = a.section?._id || a.section || '';
         setForm({
@@ -122,7 +122,7 @@ export const AssessmentFormPage = () => {
       const sub = subjects.find((s: any) => s._id === value);
       setForm((prev) => ({ ...prev, subject: value, subjectName: sub?.name || '' }));
     } else if (field === 'type' && value) {
-      const maxScore = TYPE_MAX_SCORES[value] || '';
+      const maxScore = TYPE_MAX_SCORES[value] !== undefined ? String(TYPE_MAX_SCORES[value]) : '';
       setForm((prev) => ({ ...prev, type: value, totalMarks: maxScore }));
     } else if (field === 'section' && value) {
       setForm((prev) => ({ ...prev, section: value, subject: '' }));
