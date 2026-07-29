@@ -1,0 +1,32 @@
+{
+  "name": "essms-root",
+  "version": "1.0.0",
+  "description": "Ethiopian Secondary School Management System - Root",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "dev": "start cmd /k \"cd server && npm install && npm run dev\" && start cmd /k \"cd client && npm install && npm run dev\"",
+    "seed": "npm run seed -w essms-server",
+    "server": "npm run dev -w essms-server",
+    "client": "npm run dev -w essms-client",
+    "build": "cd client && npm run build && cd ../server && npm run build",
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "cd server && npm test",
+    "test:client": "cd client && npm test"
+  },
+  "keywords": [
+    "school-management",
+    "education",
+    "mern-stack",
+    "ethiopian-education"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

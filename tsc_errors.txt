@@ -1,0 +1,13 @@
+﻿src/controllers/dashboard.controller.ts(26,19): error TS2322: Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+src/controllers/dashboard.controller.ts(31,145): error TS2339: Property 'name' does not exist on type 'ObjectId'.
+src/controllers/dashboard.controller.ts(38,19): error TS2322: Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+src/controllers/dashboard.controller.ts(43,86): error TS2339: Property 'obtainedMarks' does not exist on type 'Document<unknown, {}, IAssessmentMark, {}, {}> & IAssessmentMark & Required<{ _id: ObjectId; }> & { __v: number; }'.
+src/controllers/student.controller.ts(716,141): error TS2339: Property 'obtainedMarks' does not exist on type 'Document<unknown, {}, IAssessmentMark, {}, {}> & IAssessmentMark & Required<{ _id: ObjectId; }> & { __v: number; }'.
+src/controllers/student.controller.ts(716,202): error TS2339: Property 'obtainedMarks' does not exist on type 'Document<unknown, {}, IAssessmentMark, {}, {}> & IAssessmentMark & Required<{ _id: ObjectId; }> & { __v: number; }'.
+src/middleware/upload.middleware.ts(4,30): error TS2307: Cannot find module 'uuid' or its corresponding type declarations.
+src/seed.ts(129,229): error TS2339: Property '_id' does not exist on type '{ studentId: string; firstName: string; lastName: string; dateOfBirth: Date; gender: string; grade: number; section: any; enrollmentDate: Date; status: string; academicYear: string; }'.
+src/seed.ts(130,230): error TS2339: Property '_id' does not exist on type '{ studentId: string; firstName: string; lastName: string; dateOfBirth: Date; gender: string; grade: number; section: any; enrollmentDate: Date; status: string; academicYear: string; }'.
+src/seed.ts(130,251): error TS2339: Property '_id' does not exist on type '{ studentId: string; firstName: string; lastName: string; dateOfBirth: Date; gender: string; grade: number; section: any; enrollmentDate: Date; status: string; academicYear: string; }'.
+src/server.ts(5,25): error TS2307: Cannot find module 'compression' or its corresponding type declarations.
+src/services/ranking.service.ts(323,14): error TS2451: Cannot redeclare block-scoped variable 'triggerRankingUpdate'.
+src/services/ranking.service.ts(333,14): error TS2451: Cannot redeclare block-scoped variable 'triggerRankingUpdate'.

@@ -1,0 +1,2 @@
+﻿src/routes/index.ts(25,8): error TS2300: Duplicate identifier 'dashboardRoutes'.
+src/routes/index.ts(27,8): error TS2300: Duplicate identifier 'dashboardRoutes'.
