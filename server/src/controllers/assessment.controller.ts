@@ -112,7 +112,7 @@ export const createAssessment = async (
     const assessment = await Assessment.create({
       subject: actualSubjectId,
       section: sectionId,
-      teacher: teacher._id,
+      teacher: teacher?._id,
       type,
       title,
       description,
@@ -1002,13 +1002,13 @@ export const getReportCard = async (
         const totalPos = subjectAverages.reduce((s, sa) => s + sa.totalPossible, 0);
 
         return {
+          ...getGradeInfo(overallAvg),
           overallAverage: overallAvg,
           gpa,
           totalObtained: totalOb,
           totalPossible: totalPos,
           subjectCount: subjectAverages.length,
           subjects: subjectAverages,
-          ...getGradeInfo(overallAvg),
         };
       };
 

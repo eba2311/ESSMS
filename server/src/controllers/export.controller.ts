@@ -208,7 +208,7 @@ export const generateComprehensiveReportCard = async (
         });
         const oAvg = subs.length > 0 ? Math.round((subs.reduce((s, sa) => s + sa.average, 0) / subs.length) * 100) / 10 : 0;
         const gpa = subs.length > 0 ? Math.round((subs.reduce((s, sa) => s + sa.gpa, 0) / subs.length) * 100) / 100 : 0;
-        return { overallAverage: oAvg, gpa, subjectCount: subs.length, subjects: subs, ...getGradeInfo(oAvg) };
+        return { ...getGradeInfo(oAvg), overallAverage: oAvg, gpa, subjectCount: subs.length, subjects: subs };
       };
 
       const t1Marks = validMarks.filter((m: any) => m.assessment?.term === '1');

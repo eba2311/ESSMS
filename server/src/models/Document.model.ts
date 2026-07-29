@@ -1,7 +1,7 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { getNextSequence } from './Counter.model';
 
-export interface IDocument extends Document {
+export interface IDocument extends mongoose.Document {
   documentId: string;
   student?: mongoose.Types.ObjectId;
   teacher?: mongoose.Types.ObjectId;
