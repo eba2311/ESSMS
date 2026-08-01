@@ -59,7 +59,16 @@ export const connectDatabase = async (): Promise<void> => {
   let usingFallback = false;
   try {
     const uri = config.nodeEnv === 'test' ? config.mongodbUriTest : config.mongodbUri;
-    await mongoose.connect(uri, { retryWrites: true, w: 'majority' });
+    const connectOptions: mongoose.ConnectOptions = {
+      retryWrites: true,
+      w: 'majority',
+      serverSelectionTimeoutMS: 10000,
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+      bufferCommands: false,
+    };
+
+    await mongoose.connect(uri, connectOptions);
     logger.info('✅ MongoDB connected successfully');
   } catch (error) {
     logger.warn('⚠️ Local MongoDB not available, starting in-memory MongoDB...');
@@ -72,7 +81,12 @@ export const connectDatabase = async (): Promise<void> => {
         binary: { downloadTimeout: 180000 },
       });
       const uri = mongod.getUri();
-      await mongoose.connect(uri);
+      await mongoose.connect(uri, {
+        serverSelectionTimeoutMS: 10000,
+        connectTimeoutMS: 10000,
+        socketTimeoutMS: 45000,
+        bufferCommands: false,
+      });
       logger.info(`✅ In-memory MongoDB started at ${uri}`);
     } catch (memError) {
       logger.error('❌ Failed to start in-memory MongoDB:', memError);

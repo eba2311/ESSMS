@@ -79,8 +79,4 @@ const BusSchema = new Schema<IBus>(
   }
 );
 
-BusSchema.index({ plateNumber: 1 }, { unique: true });
-BusSchema.index({ busNumber: 1 }, { unique: true });
-BusSchema.index({ status: 1 });
-
 export const Transport = mongoose.model<IBus>('Transport', BusSchema);
