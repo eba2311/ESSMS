@@ -94,8 +94,14 @@ export const connectDatabase = async (): Promise<void> => {
     }
   }
 
-  await autoSeed();
-  await ensureAdminPassword();
+  const shouldAutoSeed = config.nodeEnv !== 'production' || process.env.ENABLE_AUTO_SEED === 'true';
+
+  if (shouldAutoSeed) {
+    await autoSeed();
+    await ensureAdminPassword();
+  } else {
+    logger.info('⚡ Skipping auto-seed and default admin password enforcement in production.');
+  }
 
   mongoose.connection.on('error', (error) => {
     logger.error('MongoDB connection error:', error);
