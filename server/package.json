@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node --transpile-only src/server.ts",
-    "build": "tsc",
+    "build": "node -e \"require('esbuild').buildSync({entryPoints:['src/server.ts'], bundle:true, platform:'node', target:['node20'], outfile:'dist/server.js', sourcemap:true});\"",
     "start": "node dist/server.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
@@ -42,7 +42,8 @@
     "compression": "^1.7.4",
     "uuid": "^9.0.0"
   },
-  "devDependencies": {
+  "dependencies": {
+    "esbuild": "^0.19.12",
     "@types/express": "^4.17.21",
     "@types/node": "^20.10.6",
     "@types/jsonwebtoken": "^9.0.5",
