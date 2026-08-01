@@ -97,6 +97,7 @@ export const LoginPage: React.FC = () => {
     >
       <Box
         sx={{
+          display: { xs: 'none', md: 'block' },
           position: 'absolute',
           top: '-30%',
           right: '-15%',
@@ -109,6 +110,7 @@ export const LoginPage: React.FC = () => {
       />
       <Box
         sx={{
+          display: { xs: 'none', md: 'block' },
           position: 'absolute',
           bottom: '-25%',
           left: '-10%',
@@ -121,6 +123,7 @@ export const LoginPage: React.FC = () => {
       />
       <Box
         sx={{
+          display: { xs: 'none', md: 'block' },
           position: 'absolute',
           top: '50%',
           left: '50%',
@@ -132,11 +135,11 @@ export const LoginPage: React.FC = () => {
           pointerEvents: 'none',
         }}
       />
-      <Container maxWidth="sm" sx={{ position: 'relative', zIndex: 1 }}>
+      <Container maxWidth="xs" sx={{ position: 'relative', zIndex: 1 }}>
         <Paper
           elevation={0}
           sx={{
-            p: { xs: 3, sm: 5 },
+            p: { xs: 2, sm: 4 },
             borderRadius: 4,
             textAlign: 'center',
             boxShadow: '0 24px 64px rgba(0,0,0,0.15), 0 2px 16px rgba(27,79,138,0.08)',
@@ -160,13 +163,13 @@ export const LoginPage: React.FC = () => {
           </Box>
           <Box display="flex" flexDirection="column" alignItems="center" mb={1}>
             <Box display="flex" justifyContent="center" mb={0.5}>
-              <img src={ministryLogo} alt="Ministry of Education" style={{ width: 72, height: 72 }} />
+              <img src={ministryLogo} alt="Ministry of Education" style={{ width: 56, height: 56 }} />
             </Box>
             <Typography variant="h6" fontWeight="700" color="#1B4F8A" sx={{ fontSize: '0.85rem', mb: 0.5 }}>
               {tc('ministryOfEducation', { defaultValue: 'ትምህርት ሚኒስቴር' })}
             </Typography>
             <Box display="flex" alignItems="center" gap={1}>
-              <Typography variant="h4" fontWeight="800" color="#1B4F8A" letterSpacing="-0.025em">
+              <Typography variant="h4" fontWeight="800" color="#1B4F8A" letterSpacing="-0.025em" sx={{ fontSize: { xs: '1.25rem', sm: '1.75rem' } }}>
                 ESSMS
               </Typography>
             </Box>
@@ -280,27 +283,7 @@ export const LoginPage: React.FC = () => {
             </Button>
           </Box>
 
-          <Box mt={3} pt={3} borderTop="1px solid" borderColor="divider">
-            <Typography variant="body2" color="text.secondary" fontWeight={600} mb={1.5}>
-              {tc('demoAccounts', { defaultValue: 'Demo Accounts' })}
-            </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 0.75,
-                '& .MuiTypography-root': {
-                  fontSize: '0.75rem',
-                  fontFamily: 'ui-monospace, monospace',
-                  color: '#6B7280',
-                },
-              }}
-            >
-              <Typography>Admin: admin / admin@school.edu.et — Admin123!</Typography>
-              <Typography>Teacher: teacher1 / teacher@school.edu.et — Teacher123!</Typography>
-              <Typography>Student: abebe / student@school.edu.et — Student123!</Typography>
-            </Box>
-          </Box>
+          {/* Demo accounts removed for production-ready UI */}
         </Paper>
       </Container>
     </Box>
