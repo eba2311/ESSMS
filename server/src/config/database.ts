@@ -94,13 +94,14 @@ export const connectDatabase = async (): Promise<void> => {
     }
   }
 
-  const shouldAutoSeed = config.nodeEnv !== 'production' || process.env.ENABLE_AUTO_SEED === 'true';
+  const isProductionRuntime = config.nodeEnv === 'production';
+  const shouldAutoSeed = !isProductionRuntime && config.enableAutoSeed;
 
   if (shouldAutoSeed) {
     await autoSeed();
     await ensureAdminPassword();
   } else {
-    logger.info('⚡ Skipping auto-seed and default admin password enforcement in production.');
+    logger.info('⚡ Auto-seed disabled. Set ENABLE_AUTO_SEED=true for development/test environments only.');
   }
 
   mongoose.connection.on('error', (error) => {

@@ -60,6 +60,9 @@ export const config = {
   // Encryption
   encryptionKey: process.env.ENCRYPTION_KEY || 'change-this-32-char-key-prod!!',
   
+  // Auto-seed / development safety
+  enableAutoSeed: process.env.ENABLE_AUTO_SEED === 'true',
+  
   // MFA
   mfa: {
     issuer: process.env.MFA_ISSUER || 'ESSMS',
