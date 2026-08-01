@@ -72,8 +72,8 @@ const startServer = async () => {
   // Initialise Socket.io
   initSocket(server);
 
-  // Then start listening
-  server.listen(PORT, () => {
+  // Then start listening — bind to 0.0.0.0 so hosting platforms detect the open port
+  server.listen(PORT, '0.0.0.0', () => {
     logger.info(`🚀 ESSMS Server running on port ${PORT}`);
     logger.info(`📚 Environment: ${config.nodeEnv}`);
   });
