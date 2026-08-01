@@ -32,8 +32,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const response = await authAPI.login(email, password);
       const data = response.data as ApiResponse<LoginPayload>;
-      
-      if (data.data?.requiresMFA) {
+      const requiresMFA = data.requiresMFA || data.data?.requiresMFA;
+
+      if (requiresMFA) {
         const mfaError = new Error('MFA Required');
         (mfaError as any).response = { data: { requireMfa: true } };
         throw mfaError;
@@ -57,7 +58,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } catch (error: unknown) {
       if (error instanceof Error && (error as any).response && (error as any).response?.data) {
         const respData = (error as any).response.data as Record<string, unknown>;
-        if (respData.requireMfa) {
+        if (respData.requireMfa || respData.requiresMFA) {
           throw error;
         }
       }

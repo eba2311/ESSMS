@@ -61,7 +61,13 @@ export const LoginPage: React.FC = () => {
       showSuccess('Login successful!');
       setTimeout(() => navigate('/dashboard'), 100);
     } catch (error: any) {
-      if (error.response?.data?.requireMfa || error.message === 'MFA Required') {
+      if (
+        error.response?.data?.requireMfa ||
+        error.response?.data?.requiresMFA ||
+        error.response?.data?.data?.requireMfa ||
+        error.response?.data?.data?.requiresMFA ||
+        error.message === 'MFA Required'
+      ) {
         localStorage.setItem('mfaEmail', formData.email);
         navigate('/mfa');
         return;

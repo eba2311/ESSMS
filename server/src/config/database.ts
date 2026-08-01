@@ -35,23 +35,37 @@ async function autoSeed(runFullSeed: (log: (msg: string) => void) => Promise<voi
   }
 }
 
-async function ensureAdminPassword() {
+async function ensureAdminUser() {
+  const adminEmail = 'admin@school.edu.et';
   const hash = await makeHash('Admin123!');
-  const result = await User.updateOne(
-    { email: 'admin@school.edu.et' },
-    {
-      $set: {
-        passwordHash: hash,
-        isActive: true,
-        forcePasswordChange: false,
-        failedLoginAttempts: 0,
-        accountLockedUntil: null,
-      },
-    }
-  );
-  if (result.matchedCount > 0) {
+  const existing = await User.findOne({ email: adminEmail }).select('+passwordHash');
+
+  if (existing) {
+    existing.passwordHash = hash;
+    existing.isActive = true;
+    existing.forcePasswordChange = false;
+    existing.failedLoginAttempts = 0;
+    existing.accountLockedUntil = null;
+    await existing.save();
     logger.info('🔑 Admin password ensured: admin@school.edu.et / Admin123!');
+    return;
   }
+
+  await User.create({
+    userId: 'ADM001',
+    username: 'admin',
+    firstName: 'Admin',
+    lastName: 'User',
+    email: adminEmail,
+    passwordHash: hash,
+    role: 'system_admin',
+    isActive: true,
+    mfaEnabled: false,
+    forcePasswordChange: false,
+    failedLoginAttempts: 0,
+  });
+
+  logger.info('🔑 Default admin created: admin@school.edu.et / Admin123!');
 }
 
 export const connectDatabase = async (): Promise<void> => {
@@ -70,14 +84,22 @@ export const connectDatabase = async (): Promise<void> => {
     await mongoose.connect(uri, connectOptions);
     logger.info('✅ MongoDB connected successfully');
   } catch (error) {
-    logger.warn('⚠️ Local MongoDB not available, starting in-memory MongoDB...');
+    logger.warn('⚠️ Local MongoDB not available.');
+
+    // In production we should NOT fall back to an in-memory MongoDB — fail fast
+    if (config.nodeEnv === 'production') {
+      logger.error('❌ Running in production and no MongoDB available. Aborting startup.');
+      throw error;
+    }
+
+    // Only attempt an in-memory fallback for development/test environments
     usingFallback = true;
     try {
       const { MongoMemoryServer } = await import('mongodb-memory-server');
       logger.info('⏳ Starting in-memory MongoDB (this may take up to 2 minutes on first run)...');
       const mongod = await MongoMemoryServer.create({
         instance: { startupTimeout: 180000 },
-        binary: { downloadTimeout: 180000 },
+        binary: { downloadTimeout: 180000, version: '7.0.3' },
       });
       const uri = mongod.getUri();
       await mongoose.connect(uri, {
@@ -99,9 +121,12 @@ export const connectDatabase = async (): Promise<void> => {
   if (shouldAutoSeed) {
     const { runFullSeed } = await import('../seed');
     await autoSeed(runFullSeed);
-    await ensureAdminPassword();
   } else {
     logger.info('⚡ Auto-seed disabled. Set ENABLE_AUTO_SEED=true for development/test environments only.');
+  }
+
+  if (!isProductionRuntime) {
+    await ensureAdminUser();
   }
 
   mongoose.connection.on('error', (error) => {

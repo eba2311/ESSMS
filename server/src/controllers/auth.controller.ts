@@ -46,6 +46,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
         message: result.message,
         data: {
           user: result.user,
+          requiresMFA: true,
         },
       });
       return;
