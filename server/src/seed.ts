@@ -1354,8 +1354,8 @@ export async function runFullSeed(log: (msg: string) => void = console.log) {
   log('');
 }
 
-// Standalone runner — only when executed directly
-if (require.main === module) {
+// Standalone runner — only when executed directly as the seed script
+if (process.argv[1] && process.argv[1].endsWith('seed.ts')) {
   async function main() {
     await mongoose.connect(MONGODB_URI);
     console.log('Connected to MongoDB');
@@ -1363,5 +1363,8 @@ if (require.main === module) {
     await mongoose.disconnect();
     process.exit(0);
   }
-  main().catch(e => { console.error('Seed failed:', e); process.exit(1); });
+  main().catch((e) => {
+    console.error('Seed failed:', e);
+    process.exit(1);
+  });
 }

@@ -71,7 +71,7 @@ import {
   ExpandLess,
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
-const ministryLogo = 'https://yt3.googleusercontent.com/ytc/AIdro_nLKvPCsGBM-CfxMzpFwyXLtO8DWdcnJ67EIRMh_MVxRQ=s200-c-k-c0x00ffffff-no-rj';
+const ministryLogo = new URL('../assets/ministry-logo.svg', import.meta.url).href;
 
 const drawerWidth = 280;
 

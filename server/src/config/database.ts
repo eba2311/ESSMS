@@ -3,7 +3,6 @@ import crypto from 'crypto';
 import { User, Settings, AcademicTerm } from '../models';
 import { config } from './index';
 import { logger } from '../utils/logger';
-import { runFullSeed } from '../seed';
 
 function makeHash(password: string): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -15,7 +14,7 @@ function makeHash(password: string): Promise<string> {
   });
 }
 
-async function autoSeed() {
+async function autoSeed(runFullSeed: (log: (msg: string) => void) => Promise<void>) {
   const userCount = await User.countDocuments();
   if (userCount > 0) {
     const sectionCount = await mongoose.connection.db!.collection('sections').countDocuments();
@@ -98,7 +97,8 @@ export const connectDatabase = async (): Promise<void> => {
   const shouldAutoSeed = !isProductionRuntime && config.enableAutoSeed;
 
   if (shouldAutoSeed) {
-    await autoSeed();
+    const { runFullSeed } = await import('../seed');
+    await autoSeed(runFullSeed);
     await ensureAdminPassword();
   } else {
     logger.info('⚡ Auto-seed disabled. Set ENABLE_AUTO_SEED=true for development/test environments only.');

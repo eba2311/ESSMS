@@ -18,7 +18,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useNotification } from '../../contexts/NotificationContext';
 import { LanguageSwitcher } from '../../components/LanguageSwitcher';
 
-const ministryLogo = 'https://yt3.googleusercontent.com/ytc/AIdro_nLKvPCsGBM-CfxMzpFwyXLtO8DWdcnJ67EIRMh_MVxRQ=s200-c-k-c0x00ffffff-no-rj';
+const ministryLogo = new URL('../../assets/ministry-logo.svg', import.meta.url).href;
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
