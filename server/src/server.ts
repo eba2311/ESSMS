@@ -35,13 +35,26 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use('/api/v1', routes);
 
-// Root endpoint
-app.get('/', (_req, res) => {
-  res.status(200).json({ 
+// Serve client static assets for production hosting
+const clientDistPath = path.join(__dirname, '../../client/dist');
+app.use(express.static(clientDistPath));
+
+// Health check endpoint for the backend
+app.get('/api/v1/health', (_req, res) => {
+  res.status(200).json({
     message: 'Ethiopian Secondary School Management System API',
     version: '1.0.0',
-    status: 'running'
+    status: 'running',
   });
+});
+
+// Serve the SPA index.html for any other route that is not an API route
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/') || req.path.startsWith('/uploads')) {
+    return next();
+  }
+
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
 // Error handling

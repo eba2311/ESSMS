@@ -11,6 +11,8 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node", "express"],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
